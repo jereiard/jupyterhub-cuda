@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  jupyterhub:
+    build: .
+    container_name: jupyterhub
+    volumes:
+      - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
+      - volume.tljh.jereiard:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8000:8000"
+    environment:
+      - DOCKER_NOTEBOOK_IMAGE=nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+      - DOCKER_NETWORK_NAME=jupyterhub_network
+    networks:
+      - jupyterhub_network
+
+volumes:
+  volume.tljh.jereiard:
+    external: true
+
+networks:
+  jupyterhub_network:
+    driver: bridge

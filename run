@@ -1,0 +1,1 @@
+docker run --gpus all -d --name jh-cuda.jereiard -p 8000:8000 -v volume.tljh.jereiard:/data jereiard/jupyterhub-cuda
