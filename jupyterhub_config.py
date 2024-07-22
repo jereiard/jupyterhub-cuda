@@ -9,10 +9,10 @@ c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
 c.DockerSpawner.image = "nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04"
 c.DockerSpawner.network_name = "jupyterhub_network"
 c.DockerSpawner.use_internal_ip = True
-# c.DockerSpawner.notebook_dir = "/home/jovyan/work"
-# c.DockerSpawner.volumes = {"jupyterhub-user-{username}": "/home/jovyan/work"}
-c.DockerSpawner.notebook_dir = "/data/{username}"
-c.DockerSpawner.volumes = {"tljh.jereiard": "/data"}  # 공통 볼륨에 마운트
+c.DockerSpawner.notebook_dir = "/home/jovyan/work"
+c.DockerSpawner.volumes = {"jupyterhub-user-{username}": "/home/jovyan/work"}
+# c.DockerSpawner.notebook_dir = "/data/{username}"
+# c.DockerSpawner.volumes = {"volume.tljh.jereiard": "/data"}  # 공통 볼륨에 마운트
 c.DockerSpawner.remove = True
 c.DockerSpawner.debug = True
 

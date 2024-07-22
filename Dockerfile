@@ -56,17 +56,6 @@ RUN conda create -n base2 python=3.12 \
 # JupyterLab 확장 설치
 RUN /opt/conda/envs/base2/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
-# JupyterHub 설정 디렉토리 생성
-RUN mkdir -p /srv/jupyterhub
-
-# JupyterHub 설정 파일 복사
-COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
-
-# 노트북 디렉토리 설정
-ENV NOTEBOOK_DIR=/home/jovyan/work
-RUN mkdir -p $NOTEBOOK_DIR
-WORKDIR $NOTEBOOK_DIR
-
 # pytorch 가상환경 생성 및 패키지 설치
 RUN conda create -n pytorch python=3.12 \
     && conda install -n pytorch -y ipykernel pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch-nightly -c nvidia
@@ -90,6 +79,18 @@ RUN echo "source activate tensorflow" >> ~/.bashrc \
 
 # tensorflow kernelspec (all users)
 RUN /opt/conda/envs/tensorflow/bin/python -m ipykernel install --name tensorflow --display-name "TensorFlow (CUDA 12.4)"
+
+# JupyterHub 설정 디렉토리 생성
+RUN mkdir -p /srv/jupyterhub
+
+# JupyterHub 설정 파일 복사
+COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+
+# 노트북 디렉토리 설정
+#ENV NOTEBOOK_DIR=/data/{username}  # 노트북 디렉토리를 /data/{username}으로 변경
+ENV NOTEBOOK_DIR=/home/jovyan/work
+RUN mkdir -p $NOTEBOOK_DIR
+WORKDIR $NOTEBOOK_DIR
 
 # Expose port
 EXPOSE 8000
