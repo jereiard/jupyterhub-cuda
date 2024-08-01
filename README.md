@@ -118,15 +118,15 @@ WORKDIR $NOTEBOOK_DIR
 EXPOSE 8000
 
 # Add a default user with password 
-RUN adduser --disabled-password --gecos "" jereiard
-RUN echo "jereiard:jereiard" | chpasswd
+RUN adduser --disabled-password --gecos "" admin
+RUN echo "admin:admin" | chpasswd
 RUN chmod +w /etc/sudoers
-RUN echo 'jereiard ALL=(ALL) NOPASSWD:ALL' | tee -a /etc/sudoers
+RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' | tee -a /etc/sudoers
 RUN chmod -w /etc/sudoers
 
 # Ensure the home directory for the default user
-RUN mkdir -p /home/jereiard
-RUN chown jereiard:jereiard /home/jereiard
+RUN mkdir -p /home/admin
+RUN chown admin:admin /home/admin
 
 # JupyterHub 시작 명령 설정
 CMD ["/opt/conda/envs/base2/bin/jupyterhub", "--config", "/srv/jupyterhub/jupyterhub_config.py"]
